@@ -16,7 +16,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from hello import views
+from django.conf import settings  # Import the settings to access MEDIA_URL and MEDIA_ROOT
+from django.conf.urls.static import static  # Import static to serve media files during development
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.home, name='home'),  # Route for the home page
+    path('news/', views.all_news, name='all_news'),  # Route for the full news list
+    path('news/<int:new_id>/', views.news_detail, name='news_detail'),  # Route for a specific news article
+    path('authors/', views.authors_list, name='authors_list'),  # Route for the list of authors
+    path('authors/<int:author_id>/news/', views.author_news, name='author_news'),  # Route for news by a specific author
 ]
+# This enables Django to serve uploaded media files, such as images, during development
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
