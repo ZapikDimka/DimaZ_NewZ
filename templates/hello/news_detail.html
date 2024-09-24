@@ -1,0 +1,16 @@
+{% extends 'hello/base.html' %}
+
+{% block title %}{{ news_article.title }}{% endblock %}
+
+{% block content %}
+    <h1>{{ news_article.title }}</h1>
+    <p><strong>By:</strong> {{ news_article.author.first_name }} {{ news_article.author.last_name }}</p>
+    <p><strong>Published on:</strong> {{ news_article.pub_date }}</p>
+    
+    {% if news_article.image %}
+        <img src="{{ news_article.image.url }}" alt="{{ news_article.title }}" style="width: 300px; height: auto; display: block; margin: 0 auto;">
+    {% endif %}
+    
+    <p>{{ news_article.content }}</p>
+    <a href="{% url 'home' %}">Back to home</a>
+{% endblock %}
